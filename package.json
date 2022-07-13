@@ -1,0 +1,16 @@
+{
+  "name": "yushi",
+  "version": "0.1.2",
+  "description": "Yushi is very short game project. Testing mongoDB for load data and save data only!",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yushi",
+    "mongoDB",
+    "gameData"
+  ],
+  "author": "Umeka",
+  "license": "ISC"
+}
