@@ -7,13 +7,11 @@ require('dotenv').config()
 let db,
     dbPw = process.env.PW
     dbUser = process.env.USER
-    dbURI = `mongodb+srv:${dbUser}:${dbPw}@umeka0.3alsj.mongodb.net/?retryWrites=true&w=majority`
+    dbUri = `mongodb+srv://${dbUser}:${dbPw}@umeka0.3alsj.mongodb.net/?retryWrites=true&w=majority`
     dbName = 'game'
 
 
-
-
-MongoClient.connect(dbURI, {useUnifiedTropology: true, useNewUrlParser: true})
+MongoClient.connect(dbUri)
     .then(client => {
         console.log(`Connected to ${dbName} Database`)
         db = client.db(dbName)
