@@ -1,8 +1,11 @@
 const express = require('express')
 const app = express()
 const MongoClient = require('mongodb').MongoClient
+const cors = require('cors')
 const PORT = 8000
 require('dotenv').config()
+
+app.use(cors())
 
 let db,
     dbPw = process.env.PW
@@ -18,9 +21,8 @@ MongoClient.connect(dbUri)
         const player = db.collection('player')
         const enemy = db.collection('enemy')
         const item = db.collection('item')
-
-
-
+        const saveFile = db.collection('saveFile')
+        const list = db.collection('list')
 
         app.set('view engine', 'ejs')
         app.use(express.static('public'))
@@ -33,10 +35,58 @@ MongoClient.connect(dbUri)
         app.get('/', (req,res)=>{
             player.find().toArray()
             .then(data => {
-                console.log(data);
+                console.log(data)
                 res.sendFile(__dirname + '/index.html')
             })
             .catch(error => console.error(error))
+        })
+
+
+
+        app.get('/api/db/players',(req,res)=>{
+            player.find().toArray()
+            .then(data=>{
+                res.json(data)
+                console.log(data);
+            })
+        })
+
+        app.get('/api/db/enemys',(req,res)=>{
+            enemy.find().toArray()
+            .then(data=>{
+                res.json(data)
+                console.log(data);
+            })
+        })
+
+        app.get('/api/db/items',(req,res)=>{
+            item.find().toArray()
+            .then(data=>{
+                res.json(data)
+                console.log(data);
+            })
+        })
+
+        app.get('/api/db/savefile',(req,res)=>{
+            saveFile.find().toArray()
+            .then(data=>{
+                res.json(data)
+                console.log(data);
+            })
+        })
+
+        app.get('/api/db/all',(req,res)=>{
+            list.aggregate([{
+                $lookup: {
+                    From: 'enemy'
+                },
+                $lookup: {
+                    From: 'item'
+                },
+                $lookup: {
+                    From: 'player'
+                }
+            }])
         })
     
         
