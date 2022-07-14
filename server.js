@@ -18,7 +18,6 @@ MongoClient.connect(dbUri)
         const player = db.collection('player')
         const enemy = db.collection('enemy')
         const item = db.collection('item')
-        const saveFile = db.collection('saveFile')
 
 
 
