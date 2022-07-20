@@ -22,7 +22,6 @@ MongoClient.connect(dbUri)
         const enemy = db.collection('enemy')
         const item = db.collection('item')
         const saveFile = db.collection('saveFile')
-        const list = db.collection('list')
 
         app.set('view engine', 'ejs')
         app.use(express.static('public'))
@@ -36,7 +35,7 @@ MongoClient.connect(dbUri)
             player.find().toArray()
             .then(data => {
                 console.log(data)
-                res.sendFile(__dirname + '/index.html')
+                res.render('index.ejs', { info: data })
             })
             .catch(error => console.error(error))
         })
@@ -73,20 +72,6 @@ MongoClient.connect(dbUri)
                 res.json(data)
                 console.log(data);
             })
-        })
-
-        app.get('/api/db/all',(req,res)=>{
-            list.aggregate([{
-                $lookup: {
-                    From: 'enemy'
-                },
-                $lookup: {
-                    From: 'item'
-                },
-                $lookup: {
-                    From: 'player'
-                }
-            }])
         })
     
         
